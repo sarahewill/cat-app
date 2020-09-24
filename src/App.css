@@ -1,11 +1,8 @@
-body {
-  background: repeating-radial-gradient(circle at 0% 50%, white 0px, white 5px, #efefef 10px, #efefef 10px)!important;
-}
 .App {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 20px 0;
 }
 img {
@@ -13,8 +10,8 @@ img {
   object-fit: cover;
 }
 button {
-  padding: 10px;
   display: block;
+  padding: 10px;
 }
 .new-cats-button {
   margin: 20px;
@@ -22,27 +19,22 @@ button {
 .row {
   display: flex;
 }
-
 .active {
   background-color: red;
 }
-
-element.style {
-}
-
 .ui.container {
   display: flex!important;
 }
-
 .ui.cards {
   justify-content: center;
   padding-top: 20px;
 }
-
 .ui.card>.content, .ui.cards>.card>.content {
   align-self: center;
 }
-
 .ui.card, .ui.cards > .card  {
   width: 210px;
+}
+a.ui.label>.icon {
+  margin: 0;
 }
