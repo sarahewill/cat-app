@@ -1,11 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import { Container, Card, Image, Button, Header } from "semantic-ui-react";
+import LikeIt from "./LikeIt";
 import './App.css';
 
-const apiKey = 'c7edd4ac-90c9-41ed-9d2b-41bbace5e6e5';
-const url = 'https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc';
+const url = 'https://api.thecatapi.com/v1/images/search?limit=6&page=10&order=Desc';
+let endpoint = "http://localhost:8080";
 
 function App() {
+
     const [cats, setCats] = useState([]);
+    const [favoriteCat, setFavoriteCat] = useState([]);
+
+    function addToFavorites(cat) {
+        if (cat) {
+            axios
+                .post(
+                    endpoint + "/api/cat",
+                    {
+                        url: cat.url,
+                        favorite: cat.favorite,
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                    }
+                )
+                .then(res => {
+                    setFavoriteCat([...favoriteCat, cat.id])
+                });
+        }
+    }
 
     useEffect(() => {
         getCats();
@@ -22,14 +48,21 @@ function App() {
     }
 
   return (
-    <div className="App">
-        <button onClick={getCats}>Get new cats</button>
-        <div>
+    <Container className="App">
+        <Header>
+            <Button color={'teal'} className={'new-cats-button'} onClick={getCats}>Get new cats</Button>
+        </Header>
+        <div className={"ui link cards"}>
             {cats.map((cat) =>
-                <img src={cat.url} key={cat.id} alt="" />
+                <Card key={cat.id} >
+                    <Image src={cat.url} key={cat.id} alt="" />
+                    <Card.Content>
+                        <LikeIt cat={cat} favoriteCat={favoriteCat} addToFavorites={addToFavorites}/>
+                    </Card.Content>
+                </Card>
             )}
         </div>
-    </div>
+    </Container>
   );
 }
 
