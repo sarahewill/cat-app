@@ -1,68 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import axios from "axios";
-import { Container, Card, Image, Button, Header } from "semantic-ui-react";
-import LikeIt from "./LikeIt";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Container } from "semantic-ui-react";
+import Favorites from "./Favorites";
+import Home from "./Home";
 import './App.css';
-
-const url = 'https://api.thecatapi.com/v1/images/search?limit=6&page=10&order=Desc';
-let endpoint = "http://localhost:8080";
 
 function App() {
 
-    const [cats, setCats] = useState([]);
-    const [favoriteCat, setFavoriteCat] = useState([]);
-
-    function addToFavorites(cat) {
-        if (cat) {
-            axios
-                .post(
-                    endpoint + "/api/cat",
-                    {
-                        url: cat.url,
-                        favorite: cat.favorite,
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                    }
-                )
-                .then(res => {
-                    setFavoriteCat([...favoriteCat, cat.id])
-                });
-        }
-    }
-
-    useEffect(() => {
-        getCats();
-    },[])
-    const getCats = () => {
-        fetch(url)
-            .then((res) => res.json())
-            .then(cats => {
-                setCats(cats);
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-    }
-
   return (
-    <Container className="App">
-        <Header>
-            <Button color={'teal'} className={'new-cats-button'} onClick={getCats}>Get new cats</Button>
-        </Header>
-        <div className={"ui link cards"}>
-            {cats.map((cat) =>
-                <Card key={cat.id} >
-                    <Image src={cat.url} key={cat.id} alt="" />
-                    <Card.Content>
-                        <LikeIt cat={cat} favoriteCat={favoriteCat} addToFavorites={addToFavorites}/>
-                    </Card.Content>
-                </Card>
-            )}
-        </div>
-    </Container>
+      <Router>
+        <Container className="App">
+            <div className="ui vertical labeled icon menu">
+                <Link to={'/'} className="item">
+                    <i className="github alternate icon"/>
+                    Home
+                </Link>
+                <Link to={'/favorites'} className="item">
+                    <i className="heart outline icon" />
+                    Favorites
+                </Link>
+            </div>
+            <Switch>
+                <Route exact path='/' component={Home} />
+                <Route path='/favorites' component={Favorites} />
+            </Switch>
+        </Container>
+      </Router>
   );
 }
 
