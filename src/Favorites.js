@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Card, Header, Icon } from "semantic-ui-react";
+import {Card, Header, Icon, Image} from "semantic-ui-react";
+import './App.css';
 
 let endpoint = "http://localhost:8080";
 
@@ -26,21 +27,10 @@ class Favorites extends Component {
                     items: res.data.map(item => {
 
                         return (
-                            <Card key={item._id} fluid>
+                            <Card key={item._id} >
+                                <Image src={item.url} />
                                 <Card.Content>
-                                    <Card.Header textAlign="left">
-                                        <div style={{ wordWrap: "break-word" }}>{item.cat}</div>
-                                    </Card.Header>
-
-                                    <Card.Meta textAlign="right">
-                                        <Icon
-                                            name="undo"
-                                            color="yellow"
-                                            onClick={() => this.undoFavorite(item._id)}
-                                        />
-                                        <span style={{ paddingRight: 10 }}>Undo</span>
-
-                                    </Card.Meta>
+                                    Unlike Me
                                 </Card.Content>
                             </Card>
                         );
@@ -76,7 +66,7 @@ class Favorites extends Component {
                         My favorites
                     </Header>
                 </div>
-                <div className="row">
+                <div className={"ui link cards"}>
                     <Card.Group>{this.state.items}</Card.Group>
                 </div>
             </div>
