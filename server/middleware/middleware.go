@@ -54,7 +54,7 @@ func init() {
 
 	fmt.Println("Collection instance created!")
 }
-// GetAllFavoriteCats get all the task route
+// GetAllFavoriteCats get all the cats route
 func GetAllFavoriteCats(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -82,7 +82,7 @@ func UndoFavorite(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "PUT")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	params := mux.Vars(r)
@@ -129,16 +129,15 @@ func insertOneFavoriteCat(cat models.Cat) {
 	fmt.Println("Inserted a Single Record ", insertResult.InsertedID)
 }
 
-// cat undo method, update cat's fav to false
+// cat delete
 func undoFavorite(cat string) {
 	fmt.Println(cat)
 	id, _ := primitive.ObjectIDFromHex(cat)
 	filter := bson.M{"_id": id}
-	update := bson.M{"$set": bson.M{"status": false}}
-	result, err := collection.UpdateOne(context.Background(), filter, update)
+	d, err := collection.DeleteOne(context.Background(), filter)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("modified count: ", result.ModifiedCount)
+	fmt.Println("Deleted Document", d.DeletedCount)
 }

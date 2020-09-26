@@ -5,11 +5,6 @@
   justify-content: center;
   padding: 20px 0;
 }
-.home-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
 img {
   height: 245px;
   object-fit: cover;
@@ -18,11 +13,13 @@ button {
   display: block;
   padding: 10px;
 }
+.right-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
 .new-cats-button {
   margin: 20px;
-}
-.row {
-  display: flex;
 }
 .active {
   background-color: red;

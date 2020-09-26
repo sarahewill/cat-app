@@ -20,7 +20,6 @@ function Home() {
                     endpoint + "/api/cat",
                     {
                         url: cat.url,
-                        favorite: cat.favorite,
                     },
                     {
                         headers: {
@@ -49,7 +48,7 @@ function Home() {
     }
 
     return (
-            <div className={'home-container'}>
+            <div className={'right-container'}>
                 <Header>
                     <Button color={'teal'} className={'new-cats-button'} onClick={getCats}>Get new cats</Button>
                 </Header>

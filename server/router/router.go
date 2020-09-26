@@ -12,7 +12,7 @@ func Router() *mux.Router {
 
 	router.HandleFunc("/api/cat", middleware.GetAllFavoriteCats).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/cat", middleware.CreateFavoriteCat).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/undoFavorite/{id}", middleware.UndoFavorite).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/undoFavorite/{id}", middleware.UndoFavorite).Methods("DELETE", "OPTIONS")
 
 	return router
 }
