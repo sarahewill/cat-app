@@ -76,7 +76,19 @@ func CreateFavoriteCat(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(cat)
 }
 
+// TaskComplete update task route
+func AdoptCat(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	params := mux.Vars(r)
+	var cat models.Cat
+	_ = json.NewDecoder(r.Body).Decode(&cat)
+	adoptCat(cat, params["id"])
+	json.NewEncoder(w).Encode(params["id"])
+}
 // UndoFavorite undo the complete task route
 func UndoFavorite(w http.ResponseWriter, r *http.Request) {
 
@@ -127,6 +139,21 @@ func insertOneFavoriteCat(cat models.Cat) {
 	}
 
 	fmt.Println("Inserted a Single Record ", insertResult.InsertedID)
+}
+
+
+// cat update method, update cat's name
+func adoptCat(cat models.Cat, id string) {
+	fmt.Println(cat, id)
+	x, _ := primitive.ObjectIDFromHex(id)
+	filter := bson.M{"_id": x}
+	update := bson.M{"$set": bson.M{"name": cat.Name}}
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("modified count: ", result.ModifiedCount)
 }
 
 // cat delete

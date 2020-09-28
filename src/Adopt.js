@@ -1,8 +1,6 @@
 import { Form } from "semantic-ui-react";
 import React, { Component } from "react";
-import axios from "axios";
 
-let endpoint = "http://localhost:8080";
 
 class Adopt extends Component {
     state = {
@@ -10,32 +8,18 @@ class Adopt extends Component {
             name: "",
         },
     };
+
     handleChange = (e) => {
         const newFields = { ...this.state.fields, [e.target.name]: e.target.value };
         this.setState({ fields: newFields });
     };
 
-    handleAdoptSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state.fields.name);
-    };
-    adoptCat = cat => {
-        // axios
-        //     .put(endpoint + "/api/cat/" + cat.id, {
-        //         headers: {
-        //             "Content-Type": "application/x-www-form-urlencoded"
-        //         }
-        //     })
-        //     .then(res => {
-        //         console.log(res);
-        //     });
-    };
     render() {
         const { fields } = this.state;
 
         return (
             <Form onSubmit={(e) => {
-                this.handleAdoptSubmit(e);
+                this.props.handleAdoptSubmit(this.state.fields, this.props.cat);
                 this.props.handleClose();
             }}>
                 <label htmlFor="name">Name</label>
@@ -46,8 +30,8 @@ class Adopt extends Component {
                     placeholder="Name"
                     value={fields.name}
                     onChange={this.handleChange}
-                ></input>
-                <button>Adopt</button>
+                />
+                <button type={'submit'}>Adopt</button>
             </Form>
         );
     }
