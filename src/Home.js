@@ -50,7 +50,7 @@ function Home() {
     return (
             <div className={'right-container'}>
                 <Header>
-                    <Button color={'teal'} className={'new-cats-button'} onClick={getCats}>Get new cats</Button>
+                    <Button color={'teal'}  onClick={getCats}>Get new cats</Button>
                 </Header>
                 <div className={"ui link cards"}>
                     {cats.map((cat) =>
