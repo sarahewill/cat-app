@@ -33,11 +33,8 @@ function App() {
                 </div>
             </GridColumn>
             <Switch>
-                <div className={'fourteen wide column'}>
                     <Route exact path='/' component={Home} />
                     <Route path='/favorites' component={Favorites} />
-                </div>
-
             </Switch>
         </Container>
       </Router>
