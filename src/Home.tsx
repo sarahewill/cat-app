@@ -21,6 +21,7 @@ function Home(): JSX.Element {
 
     const [cats, setCats] = useState([]);
     const [favoriteCat, setFavoriteCat] = useState(['']);
+    const [loading, setIsLoading] = useState(true);
     const buttonRef = React.useRef(null)
 
     function addToFavorites(cat: Cat) {
@@ -52,6 +53,7 @@ function Home(): JSX.Element {
             .then((res) => res.json())
             .then(cats => {
                 setCats(cats);
+                setIsLoading(!loading);
             })
             .catch((error) => {
                 console.log('error', error);
